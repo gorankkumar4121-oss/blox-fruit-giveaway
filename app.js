@@ -2,8 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 
 import {
   getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -30,59 +29,27 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Register
-window.register = async function() {
+window.login = async function(){
 
-  const username =
-    document.getElementById("username").value;
+    const robloxUsername =
+      document.getElementById("robloxUsername").value;
 
-  const password =
-    document.getElementById("password").value;
+    const email =
+      document.getElementById("email").value;
 
-  // Firebase Auth requires an email.
-  const fakeEmail =
-    username.toLowerCase() + "@mywebsite.com";
+    const password =
+      document.getElementById("password").value;
 
-  try {
-    await createUserWithEmailAndPassword(
-      auth,
-      fakeEmail,
-      password
-    );
+    try{
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-    alert("Account Created Successfully");
-  }
-  catch(error){
-    alert(error.message);
-  }
-};
+        alert("Login Successful");
 
-// Login
-window.login = async function() {
-
-  const username =
-    document.getElementById("username").value;
-
-  const password =
-    document.getElementById("password").value;
-
-  const fakeEmail =
-    username.toLowerCase() + "@mywebsite.com";
-
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      fakeEmail,
-      password
-    );
-
-    alert("Login Successful");
-
-    // Example:
-    // window.location.href = "dashboard.html";
-
-  }
-  catch(error){
-    alert(error.message);
-  }
-};
+    }catch(error){
+        alert(error.message);
+    }
+}
